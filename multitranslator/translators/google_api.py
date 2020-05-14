@@ -17,8 +17,8 @@ def FromConfig(config):
         json_file = config['service_account']['content']
         with open(json_file, 'rb') as fp:
             data = fp.read()
-        json.loads(data)
-        project_id = data['project_id']
+        loaded = json.loads(data)
+        project_id = loaded['project_id']
         return GoogleTranslator(json_file, project_id)
 
 
@@ -29,14 +29,18 @@ class GoogleTranslator(object):
         self.parent = self.client.location_path(project_id, 'global')
 
     def Translate(self, original_text, src, dest):
-        response = self.client.translate_text(
+        api_response = self.client.translate_text(
             parent=self.parent,
             contents=[original_text],
             mime_type='text/plain',
             source_language_code=src,
             target_language_code=dest,
         )
-        return response
+
+        translated_text = api_response.translations[0].translated_text
+        resp = response.TranslationResponse(original_text, translated_text, src, dest, TRANSLATOR_NAME, None)
+        return resp
+
 
 if __name__ == '__main__':
     t = GoogleTranslator(None)

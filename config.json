@@ -2,17 +2,8 @@
   "translators": [
     {
       "name": "google",
-      "api_key": {
-        "enabled": true,
-        "is_encrypted": true,
-        "padding": "         ",
-        "content": "Lc0GzRrd0kmzgjtrlXa/VMXvutQuXLT5+GEstu9WgmTFwDHaSNQA8fyFv3Oe4rbe"
-      },
       "service_account": {
-        "enabled": false,
-        "is_encrypted": false,
-        "padding": null,
-        "content": ""
+        "content": "c:/Code/data/vivid.json"
       }
     },
     {
@@ -21,10 +12,12 @@
         "is_encrypted": true,
         "padding": "            ",
         "content": "EofGbqhao7eR4p6FfuGMaZ4zD8WMcCgk9EVnWX7q8L+hR7SYnVObM00nNIepLqQouffz/oc7S/YdKraSaakGkCxeUdrgmGb5aRhtmVt3Ej3H6E1HkO4I/sThqDwwRAj1"
+        
       }
     },
     {
-      "name": "aws"
+      "name": "aws",
+      "region": "us-west-2"
     },
     {
       "name": "googletrans"
@@ -32,10 +25,13 @@
   ],
   "default_translator": "googletrans",
   "default_dest": "ko",
-  "no_translates": ["en", "ko"],
+  "no_translates": [
+    "en",
+    "ko"
+  ],
   "src_langs": [
     {
-      "src": "jp",
+      "src": "ja",
       "translator": "google"
     },
     {
@@ -44,7 +40,7 @@
       "translator": "yandex"
     },
     {
-      "src": "zh",
+      "src": "es",
       "translator": "aws"
     }
   ]

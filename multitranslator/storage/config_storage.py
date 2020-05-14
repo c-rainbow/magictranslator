@@ -27,12 +27,14 @@ class ConfigStorage(object):
         
         self.aes_key = self.ReadAESFile()
         if self.aes_key is None:
+            print('AES key is None')
             self.aes_key = self.GenerateNewAESKey()
             self.WriteAESFile()
 
         self.encryptor = AES.new(self.aes_key, _MODE, _INITIALIZATION_VECTOR)
         self.decryptor = AES.new(self.aes_key, _MODE, _INITIALIZATION_VECTOR)
         self.data = self.ReadDataFile()
+        #self.EncryptDataFile()
 
     def ReadAESFile(self):
         aes_file = pathlib.Path(self.aes_filepath)
@@ -58,7 +60,7 @@ class ConfigStorage(object):
         with open(self.data_filepath, 'rb') as fp:
             content = fp.read()
         loaded = json.loads(content)
-        decrypted = DecryptRecursively(content, self.decryptor)
+        decrypted = DecryptRecursively(loaded, self.decryptor)
         return decrypted
 
     def EncryptDataFile(self):
@@ -77,7 +79,7 @@ def PadData(content):
     content_bytes = content.encode(_UTF8)
     rem = len(content_bytes) % AES_BLOCK_SIZE
     if rem > 0:
-        padding = ' ' * (AES_BLOCK_SIZE - rem)
+        padding = '.' * (AES_BLOCK_SIZE - rem)
         return (content + padding).encode(_UTF8), padding
     return content_bytes, ''
 
@@ -110,10 +112,14 @@ def DecryptRecursively(data, decryptor):
     if data_type == dict:
         if data.get(_IS_ENCRYPTED_KEY):
             new_data = dict(data)
-            decrypted = base64.b64decode(data[_CONTENT_KEY])
-            decrypted = decryptor.decrypt(decrypted).decode(_UTF8)
+            decrypted2 = base64.b64decode(data[_CONTENT_KEY].encode('utf8'))
+            print('decrypted2:', decrypted2)
+            decrypted = decryptor.decrypt(decrypted2)
+            print('decrypted len:', len(decrypted))
+            print('decrypted heads:', decrypted[:10])
+            decrypted4 = decrypted #.decode(_UTF8)
             new_data[_IS_ENCRYPTED_KEY] = False
-            new_data[_CONTENT_KEY] = decrypted[:-len(data[_PADDING_KEY])]
+            new_data[_CONTENT_KEY] = decrypted4[:-len(data[_PADDING_KEY])]
             return new_data
         return {key: DecryptRecursively(value, decryptor) for key, value in data.items()}
 

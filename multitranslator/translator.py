@@ -18,7 +18,7 @@ def FromConfigStorage(storage):
 class MultiTranslator(object):
 
     def __init__(self, config, lang_detector):
-        self.translators = self.getTranslators(self.config)
+        self.translators = self.getTranslators(config)
         self.default_translator = config.get('default_translator')
         self.default_dest = config.get('default_dest')
         self.no_translates = config.get('no_translates')
@@ -36,8 +36,8 @@ class MultiTranslator(object):
                 translators[name] = aws_api.FromConfig(translator_config)
             elif name == yandex_api.TRANSLATOR_NAME:
                 translators[name] = yandex_api.FromConfig(translator_config)
-            #elif name == google_api.TRANSLATOR_NAME:
-            #    translators[name] = google_api.FromConfig(translator_config)
+            elif name == google_api.TRANSLATOR_NAME:
+                translators[name] = google_api.FromConfig(translator_config)
             #elif name == azure_api.TRANSLATOR_NAME:
             #    translators[name] = azure_api.FromConfig(translator_config)
             else:
