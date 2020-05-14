@@ -1,6 +1,6 @@
 import googletrans
 
-import response
+from multitranslator import response
 
 
 TRANSLATOR_NAME = 'googletrans'

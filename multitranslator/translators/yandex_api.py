@@ -1,7 +1,8 @@
 
 import json
 import requests
-import response
+
+from multitranslator import response
 
 
 TRANSLATOR_NAME = 'yandex'
@@ -24,8 +25,9 @@ class YandexTranslator(object):
         r = requests.post(full_url, data={'text': original_text})
         json_response = json.loads(r.text)
         lang_codes = json_response['lang'].split('-')
+        translated_text = json_response['text'][0]
 
-        rr = response.TranslationResponse(original_text, json_response['text'][0], lang_codes[0], lang_codes[1], TRANSLATOR_NAME, None)
+        rr = response.TranslationResponse(original_text, translated_text, lang_codes[0], lang_codes[1], TRANSLATOR_NAME, None)
         return rr
 
 

@@ -1,13 +1,13 @@
 
 import boto3
-import response
+from multitranslator import response
 
 
 TRANSLATOR_NAME = 'aws'
 
-def FromConfig(unused_config):
-    return AwsTranslator()  # AWS translator client gets all config from environment.
 
+def FromConfig(unused_config):
+    return AwsTranslator()  # AWS translator client gets all config from the environment.
 
 
 class AwsTranslator(object):
@@ -21,10 +21,5 @@ class AwsTranslator(object):
         translated_text = result.get('TranslatedText')
         src_code = result.get('SourceLanguageCode')
         dest_code = result.get('TargetLanguageCode')
-        return response.TranslationResponse(original_text, translated_text, src_code, dest_code, TRANSLATOR_NAME, None)
-
-
-if __name__ == '__main__':
-    t = AwsTranslator()
-    r = t.Translate('This is a test sentence', 'en', 'ko')
-    print(r)
+        return response.TranslationResponse(
+            original_text, translated_text, src_code, dest_code, TRANSLATOR_NAME, None)

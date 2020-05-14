@@ -1,8 +1,9 @@
+'''Reads config JSON file and encrypt/decrypt sensitive data in it.'''
 
 import base64
 import json
-import pathlib
 import os
+import pathlib
 
 from Crypto import Random
 from Crypto.Cipher import AES
@@ -100,6 +101,7 @@ def EncryptRecursively(data, encryptor):
     return data
 
 
+# Traverse json-like data and decrypt where necessary
 def DecryptRecursively(data, decryptor):
     data_type = type(data)
     if data_type == list:
@@ -116,4 +118,3 @@ def DecryptRecursively(data, decryptor):
         return {key: DecryptRecursively(value, decryptor) for key, value in data.items()}
 
     return data
-

@@ -1,27 +1,29 @@
 
-import aws_api
-import azure_api
-import google_ajax
-import google_api
-import yandex_api
+from multitranslator import response
+from multitranslator.detector import detector
+from multitranslator.translators import aws_api
+from multitranslator.translators import azure_api
+from multitranslator.translators import google_ajax
+from multitranslator.translators import google_api
+from multitranslator.translators import yandex_api
 
 
 def FromConfigStorage(storage):
     config = storage.GetConfig()
-    detector = detector.LanguageDetector(config)
-    translator = MultiTranslator(config, detector)
+    lang_detector = detector.LanguageDetector(config)
+    translator = MultiTranslator(config, lang_detector)
     return translator
 
 
 class MultiTranslator(object):
 
-    def __init__(self, config, detector):
+    def __init__(self, config, lang_detector):
         self.translators = self.getTranslators(self.config)
         self.default_translator = config.get('default_translator')
         self.default_dest = config.get('default_dest')
         self.no_translates = config.get('no_translates')
         self.src_langs = config.get('src_langs')
-        self.detector = detector
+        self.lang_detector = lang_detector
 
     def getTranslators(self, config):
         translators = dict()
@@ -57,15 +59,15 @@ class MultiTranslator(object):
 
     def Translate(self, original_text, src_code=None):
         if src_code is None:
-            src_code = self.detector.Detect(original_text)
+            src_code = self.lang_detector.Detect(original_text)
 
         translator_name, dest_code = self.getMatchingTranslator(src_code)
         if translator_name is None:  # Don't translate this language
-            return None
+            return response.TranslationResponse(original_text, original_text, src_code, src_code, None, None)
 
         translator = self.translators[translator_name]
-        response = translator.Translate(original_text, src_code, dest_code)
-        return response
+        resp = translator.Translate(original_text, src_code, dest_code)
+        return resp
 
 
 

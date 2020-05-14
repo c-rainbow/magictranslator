@@ -1,4 +1,4 @@
-
+from multitranslator import response
 
 TRANSLATOR_NAME = 'azure'
 
