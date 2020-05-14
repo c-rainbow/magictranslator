@@ -12,10 +12,6 @@ _URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key={api_key}&la
 
 def FromConfig(config):
     api_key = config.get('api_key').get('content')
-    #api_key = api_key.decode('utf8')
-    print("api_key len:", len(api_key))
-    print("api_key head:", api_key[:5])
-
     t = YandexTranslator(api_key)
     return t
 

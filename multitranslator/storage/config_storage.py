@@ -79,7 +79,7 @@ def PadData(content):
     content_bytes = content.encode(_UTF8)
     rem = len(content_bytes) % AES_BLOCK_SIZE
     if rem > 0:
-        padding = '.' * (AES_BLOCK_SIZE - rem)
+        padding = ' ' * (AES_BLOCK_SIZE - rem)
         return (content + padding).encode(_UTF8), padding
     return content_bytes, ''
 
@@ -117,7 +117,7 @@ def DecryptRecursively(data, decryptor):
             decrypted = decryptor.decrypt(decrypted2)
             print('decrypted len:', len(decrypted))
             print('decrypted heads:', decrypted[:10])
-            decrypted4 = decrypted #.decode(_UTF8)
+            decrypted4 = decrypted.decode(_UTF8)
             new_data[_IS_ENCRYPTED_KEY] = False
             new_data[_CONTENT_KEY] = decrypted4[:-len(data[_PADDING_KEY])]
             return new_data
