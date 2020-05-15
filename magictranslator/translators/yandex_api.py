@@ -28,17 +28,6 @@ class YandexTranslator(object):
         lang_codes = json_response['lang'].split('-')
         translated_text = json_response['text'][0]
 
-        rr = response.TranslationResponse(
+        resp = response.TranslationResponse(
             original_text, translated_text, lang_codes[0], lang_codes[1], TRANSLATOR_NAME, None)
-        return rr
-
-
-
-if __name__ == '__main__':
-    api_key = ''
-    t = YandexTranslator(api_key)
-    r = t.Translate('This is a test sentence', 'en', 'ru')
-    print(r)
-    #print(dir(r))
-    #print(r.text)
-
+        return resp
