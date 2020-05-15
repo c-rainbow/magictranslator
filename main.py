@@ -18,7 +18,7 @@ if __name__ == '__main__':
     #print(res)
 
     # 영어 번역 안함
-    res = t.Translate('hello world hello Python')
+    res = t.Translate('hello world hello Python.')
     print(res)
 
     # 한국어 번역 안함
