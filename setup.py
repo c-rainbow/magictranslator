@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="magictranslator",
-    version="0.0.1",
+    version="0.0.2",
     author="c_rainbow",
     author_email="c.rainbow.678@example.com",
     description="Wrapper library for multiple translation APIs",

@@ -18,33 +18,34 @@ def FromJSONConfigFile(config_filepath):
     return translator
 
 
+def GetTranslators(translator_configs):
+    translators = dict()
+    for translator_config in translator_configs:
+        name = translator_config.get('name')
+        
+        if name == google_ajax.TRANSLATOR_NAME:
+            translators[name] = google_ajax.FromConfig(translator_config)
+        elif name == aws_api.TRANSLATOR_NAME:
+            translators[name] = aws_api.FromConfig(translator_config)
+        elif name == yandex_api.TRANSLATOR_NAME:
+            translators[name] = yandex_api.FromConfig(translator_config)
+        elif name == google_api.TRANSLATOR_NAME:
+            translators[name] = google_api.FromConfig(translator_config)
+        else:
+            raise NameError('Invalid translator name: %s' % name)
+    
+    return translators
+
+
 class MagicTranslator(object):
 
     def __init__(self, config, lang_detector):
-        self.translators = self.getTranslators(config)
+        self.translators = GetTranslators(config.get('translators'))
         self.default_translator = config.get('default_translator')
         self.default_dest = config.get('default_dest')
         self.no_translates = config.get('no_translates')
         self.src_langs = config.get('src_langs')
         self.lang_detector = lang_detector
-
-    def getTranslators(self, config):
-        translators = dict()
-        for translator_config in config.get('translators'):
-            name = translator_config.get('name')
-            
-            if name == google_ajax.TRANSLATOR_NAME:
-                translators[name] = google_ajax.FromConfig(translator_config)
-            elif name == aws_api.TRANSLATOR_NAME:
-                translators[name] = aws_api.FromConfig(translator_config)
-            elif name == yandex_api.TRANSLATOR_NAME:
-                translators[name] = yandex_api.FromConfig(translator_config)
-            elif name == google_api.TRANSLATOR_NAME:
-                translators[name] = google_api.FromConfig(translator_config)
-            else:
-                print('Invalid translator name:', name)
-        
-        return translators
 
     # Gets translator and matching destination language from the source language.
     def getMatchingTranslator(self, src_code):
