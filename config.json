@@ -2,21 +2,15 @@
   "translators": [
     {
       "name": "google",
-      "service_account": {
-        "content": "c:/Code/data/vivid.json"
-      }
-    },
-    {
-      "name": "yandex",
-      "api_key": {
-        "is_encrypted": true,
-        "padding": "            ",
-        "content": "r7Bv6AbJ36Et2JrnlaCayw/m5XiXfTe6AdD0moDLwzY7aCk0wqAQzYRt4B0cg9dCpRKQbXzSk7deNVqSH6JXvfHet3ElgfwRX+SgpZJvcIKX20n1QL4x0UWzHcPyhs6F"
-      }
+      "service_account": "[PATH TO SERVICE ACCOUNT SECRET JSON FILE]"
     },
     {
       "name": "aws",
-      "region": "us-west-2"
+      "region": "[AWS REGION NAME HERE]"
+    },
+    {
+      "name": "yandex",
+      "api_key": "[YOUR API KEY HERE]"
     },
     {
       "name": "googletrans"

@@ -11,15 +11,12 @@ TRANSLATOR_NAME = 'google'
 
 
 def FromConfig(config):
-    if 'api_key' in config:
-        pass  # Create REST client for API key
-    if 'service_account' in config:
-        json_file = config['service_account']['content']
-        with open(json_file, 'rb') as fp:
-            data = fp.read()
-        loaded = json.loads(data)
-        project_id = loaded['project_id']
-        return GoogleTranslator(json_file, project_id)
+    json_file = config['service_account']
+    with open(json_file, 'rb') as fp:
+        data = fp.read()
+    loaded = json.loads(data)
+    project_id = loaded['project_id']
+    return GoogleTranslator(json_file, project_id)
 
 
 class GoogleTranslator(object):
@@ -40,9 +37,3 @@ class GoogleTranslator(object):
         translated_text = api_response.translations[0].translated_text
         resp = response.TranslationResponse(original_text, translated_text, src, dest, TRANSLATOR_NAME, None)
         return resp
-
-
-if __name__ == '__main__':
-    t = GoogleTranslator(None)
-    r = t.Translate('하나 둘', 'ko', 'en')
-    print(r)

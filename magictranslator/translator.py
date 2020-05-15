@@ -1,15 +1,18 @@
 
+import json
+
 from magictranslator import response
 from magictranslator.detector import detector
 from magictranslator.translators import aws_api
-from magictranslator.translators import azure_api
 from magictranslator.translators import google_ajax
 from magictranslator.translators import google_api
 from magictranslator.translators import yandex_api
 
 
-def FromConfigStorage(storage):
-    config = storage.GetConfig()
+def FromJSONConfigFile(config_filepath):
+    with open(config_filepath, 'r') as fp:
+        content = fp.read()
+    config = json.loads(content)
     lang_detector = detector.LanguageDetector(config)
     translator = MagicTranslator(config, lang_detector)
     return translator
@@ -38,8 +41,6 @@ class MagicTranslator(object):
                 translators[name] = yandex_api.FromConfig(translator_config)
             elif name == google_api.TRANSLATOR_NAME:
                 translators[name] = google_api.FromConfig(translator_config)
-            #elif name == azure_api.TRANSLATOR_NAME:
-            #    translators[name] = azure_api.FromConfig(translator_config)
             else:
                 print('Invalid translator name:', name)
         

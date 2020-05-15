@@ -1,30 +1,29 @@
 
 from magictranslator import translator
-from magictranslator.storage import config_storage
 
 
 if __name__ == '__main__':
-    storage = config_storage.ConfigStorage()
-    t = translator.FromConfigStorage(storage)
+    t = translator.FromJSONConfigFile('config.json')
     
-    #res = t.Translate('ありがとうございます')
-    #print(res)
+    res = t.Translate('ありがとうございます')
+    print(res)
 
+    # Yandex test
     res = t.Translate('Мне подойдёт любой день')
     print(res)
 
     # AWS
-    #res = t.Translate('hola amigo buenas noches')
-    #print(res)
+    res = t.Translate('hola amigo buenas noches')
+    print(res)
 
-    # 영어 번역 안함
+    # English is not translated
     res = t.Translate('hello world hello Python.')
     print(res)
 
-    # 한국어 번역 안함
+    # Korean is not translated
     res = t.Translate('이것은 한국어입니다')
     print(res)
 
-    # 기타 언어
+    # AWS
     res = t.Translate('吉林舒兰急寻去过清华浴池居民')
     print(res)
