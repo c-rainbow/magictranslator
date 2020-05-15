@@ -2,7 +2,7 @@
 import json
 import requests
 
-from multitranslator import response
+from magictranslator import response
 
 
 TRANSLATOR_NAME = 'yandex'

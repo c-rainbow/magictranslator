@@ -1,6 +1,6 @@
 
-from multitranslator import translator
-from multitranslator.storage import config_storage
+from magictranslator import translator
+from magictranslator.storage import config_storage
 
 
 if __name__ == '__main__':

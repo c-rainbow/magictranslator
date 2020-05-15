@@ -1,21 +1,21 @@
 
-from multitranslator import response
-from multitranslator.detector import detector
-from multitranslator.translators import aws_api
-from multitranslator.translators import azure_api
-from multitranslator.translators import google_ajax
-from multitranslator.translators import google_api
-from multitranslator.translators import yandex_api
+from magictranslator import response
+from magictranslator.detector import detector
+from magictranslator.translators import aws_api
+from magictranslator.translators import azure_api
+from magictranslator.translators import google_ajax
+from magictranslator.translators import google_api
+from magictranslator.translators import yandex_api
 
 
 def FromConfigStorage(storage):
     config = storage.GetConfig()
     lang_detector = detector.LanguageDetector(config)
-    translator = MultiTranslator(config, lang_detector)
+    translator = MagicTranslator(config, lang_detector)
     return translator
 
 
-class MultiTranslator(object):
+class MagicTranslator(object):
 
     def __init__(self, config, lang_detector):
         self.translators = self.getTranslators(config)

@@ -1,6 +1,6 @@
 
 import boto3
-from multitranslator import response
+from magictranslator import response
 
 
 TRANSLATOR_NAME = 'aws'

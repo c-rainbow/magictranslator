@@ -5,7 +5,7 @@ from google.cloud import translate
 from google.oauth2 import service_account
 from google.oauth2 import credentials
 
-from multitranslator import response
+from magictranslator import response
 
 TRANSLATOR_NAME = 'google'
 
