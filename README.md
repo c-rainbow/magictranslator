@@ -1,44 +1,55 @@
-Wrapper library of multiple translation APIs.
+# Magic Translator
 
-With this library, you can configure the following:
-(1) For each source language, which translation API to use
-(2) For each source language, which destination language to translate to
+Magic translator is a wrapper library of multiple translation APIs.
 
-Config JSON file structure
-
-MagicTranslator accepts JSON-like data as input config. The config JSON file
-(as shown in config.json) has the following structure
-
-"translators": {
-    List translators to use, with credentials (API key, etc)
-    Each translator has name (which should match the names in the Python file), and optional credential info.
-    The list of currently supported translator names are: googletrans, google, aws, yandex
-
-}
+For different source languages, you can configure which translation API to use and/or which destination language to translate to.
 
 
-"default_translator": which translator to use by default, when the source language is not configured in src_langs. The name should be one of the translators in "translators" section
+## Config JSON file structure
 
-"default_dest": to which language to translate by default. Should be a valid ISO-639-1 two-character code
+MagicTranslator accepts JSON-like data config as input. The config JSON data (example can be found in config.json) has the following structure. All language codes are valid two-character ISO-639-1 codes, such as 'en', 'ar', 'ko'
 
-"no_translates": languages not to translate. Should be a valid ISO-639-1 two-character code
+### translators
+
+List of translators to use. Each object in the list has the following items
+
+- name (required): Name of translator. Currently supported names are: googletrans, google, aws, yandex
+- optional data specific to each translator
+    - googletrans: no additional data is needed
+    - google: "service_account" is required with path to the service account JSON file
+    - aws: "region" is required for the AWS Translate API region name
+    - yandex: "api_key" is required
+
+### default_translator
+
+Name of the default translator. Should be one of the translators in "translators" section
+
+### default_dest
+
+Default destination language code to translate to
+
+### no_translates
+
+List of language codes not to translate
+
+### src_langs
+
+List of source languages to configure specifically. All other languages not in this list will be translated to default_dest by default_translator.
+
+Each object in the list has three fields
+- src (required): Source language code
+- dest (optional): Destination language code, if different from default_dest
+- translator (optional): Name of translator to use, if different from default_translator
 
 
-"src_langs": source languages. Each object in the list has three fields
-"src" (required) ISO-639-1 code of the source language
-"dest" (optional) ISO-639-1 code of the destination language. If missing, default_dest is used
-"translator" (optional) name of translator to use. The name should be one of the translators in "translators" section
+## Usage
 
-
-Usage
-
-[code]
-
+```python
 from magictranslator import translator
 
 t = translator.FromJSONConfigFile('config.json')  
 res = t.Translate('hola amigo buenas noches')
 print(res.translated_text)
+```
 
-[/code]
 
