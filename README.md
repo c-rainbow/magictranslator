@@ -1,8 +1,26 @@
 # Magic Translator
 
 Magic translator is a wrapper library of multiple translation APIs.
-
 For different source languages, you can configure which translation API to use and/or which destination language to translate to.
+
+
+## Installation
+
+The library is developed and tested in Python 3.7
+
+```python
+pip install magictranslator
+```
+
+## Usage
+
+```python
+from magictranslator import translator
+
+t = translator.FromJSONConfigFile('config.json')  
+res = t.Translate('hola amigo buenas noches')
+print(res.translated_text)
+```
 
 
 ## Config JSON file structure
@@ -40,16 +58,5 @@ Each object in the list has three fields
 - src (required): Source language code
 - dest (optional): Destination language code, if different from default_dest
 - translator (optional): Name of translator to use, if different from default_translator
-
-
-## Usage
-
-```python
-from magictranslator import translator
-
-t = translator.FromJSONConfigFile('config.json')  
-res = t.Translate('hola amigo buenas noches')
-print(res.translated_text)
-```
 
 
