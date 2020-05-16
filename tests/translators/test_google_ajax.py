@@ -1,5 +1,4 @@
 
-import boto3
 import googletrans
 import unittest
 from unittest import mock
@@ -16,16 +15,16 @@ class GoogleAjaxTests(unittest.TestCase):
     def testTranslate(self, googletrans_mock):
         translator_mock = googletrans_mock.return_value
         translated_mock = translator_mock.translate.return_value
-        translated_mock.text = 'Привет мир'
+        translated_mock.text = 'Ciao mondo'
         translated_mock.src = 'ko'
-        translated_mock.dest = 'ru'
+        translated_mock.dest = 'it'
 
         t = google_ajax.GoogleAjaxTranslator()
-        response = t.Translate('세계야 안녕', 'ko', 'ru')
-        self.assertEqual('세계야 안녕', response.original_text)
-        self.assertEqual('Привет мир', response.translated_text)
+        response = t.Translate('세계여 안녕', 'ko', 'it')
+        self.assertEqual('세계여 안녕', response.original_text)
+        self.assertEqual('Ciao mondo', response.translated_text)
         self.assertEqual('ko', response.src)
-        self.assertEqual('ru', response.dest)
+        self.assertEqual('it', response.dest)
         self.assertEqual('googletrans', response.translator)
         self.assertIsNone(response.error)
 
